@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/widgets/reportListWidget.dart';
 import 'package:helpdesk/widgets/reportPostWidget.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ReportPostWidget(),
+                ReportListWidget(),
               ],
             ),
           ),

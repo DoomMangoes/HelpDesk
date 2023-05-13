@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../models/report.dart';
 
 class ReportPostWidget extends StatelessWidget {
-  const ReportPostWidget({super.key});
+  final Report reportItem;
+  const ReportPostWidget({
+    super.key,
+    required this.reportItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +17,8 @@ class ReportPostWidget extends StatelessWidget {
         padding: EdgeInsets.only(
           left: 15,
         ),
-        height: 100,
-        width: 330,
+        height: 120,
+        width: 340,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(4),
@@ -37,13 +44,16 @@ class ReportPostWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "User1",
+                      reportItem.originalPoster +
+                          " (" +
+                          reportItem.userType +
+                          ")",
                       style: TextStyle(
                         fontSize: 15,
                       ),
                     ),
                     Text(
-                      "Date Posted",
+                      DateFormat.yMMMMd().format(reportItem.date),
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -53,12 +63,12 @@ class ReportPostWidget extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Expanded(
-                    child: FittedBox(
+                FittedBox(
+                    child: Expanded(
                   child: Text(
-                    "Report Title",
+                    reportItem.reportTitle,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -70,14 +80,14 @@ class ReportPostWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Report Category",
+                      reportItem.category,
                       style: TextStyle(
                         fontSize: 13,
                         color: Colors.grey[700],
                       ),
                     ),
                     Text(
-                      "Comments: 1",
+                      "Comments: " + reportItem.comments.length.toString(),
                       style: TextStyle(
                         fontSize: 13,
                         color: Colors.grey[700],

@@ -5,12 +5,14 @@ class Comment {
   String commentID;
   String commentBody;
   String originalPoster;
+  String userType;
   String parentID;
   DateTime date;
 
   Comment({
     required this.commentBody,
     required this.originalPoster,
+    required this.userType,
     required this.parentID,
     required this.date,
   }) : commentID = const Uuid().v4();

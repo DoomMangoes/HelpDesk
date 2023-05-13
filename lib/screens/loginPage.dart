@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(
                   builder: (context) => HomePage(
                         currentUser: match.username,
-                        userType: "User",
+                        userType: match.userType,
                       )));
         } else {
           alert("Username and password do not match");
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(
                   builder: (context) => HomePage(
                         currentUser: match.username,
-                        userType: "Admin",
+                        userType: match.userType,
                       )));
         } else {
           alert("Username and password do not match");
