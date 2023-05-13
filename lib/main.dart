@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color(0xFFFAFAFA),
         ),
         // A widget which will be started on application startup
         home: LoginPage(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/widgets/reportPostWidget.dart';
 
 class HomePage extends StatefulWidget {
   final String currentUser;
@@ -31,9 +32,18 @@ class _HomePageState extends State<HomePage> {
           )
         ]),
       ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ReportPostWidget(),
+              ],
+            ),
+          ),
         ),
       ),
     );
