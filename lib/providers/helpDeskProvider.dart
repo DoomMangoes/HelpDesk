@@ -14,6 +14,13 @@ class HelpDeskProvider extends ChangeNotifier {
 
   final List<Report> _reports = [
     Report(
+        reportTitle: "Admin Deeznuts",
+        reportBody: "Ligma",
+        originalPoster: "Admin",
+        userType: "Admin",
+        category: "General",
+        date: DateTime.now()),
+    Report(
         reportTitle: "Not working",
         reportBody: "I dunno",
         originalPoster: "user",
