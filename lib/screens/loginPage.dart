@@ -103,6 +103,26 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void register(UnmodifiableListView<User> users) {
+    final user = _usernameController.text;
+    final pass = _passwordController.text;
+
+    User match = findUser(users, user, pass);
+
+    if (user != "" && pass != "") {
+      if (match.username == "") {
+        final newUser = User(username: user, password: pass);
+        context.read<HelpDeskProvider>().register(newUser);
+
+        alert("You have been successfully registered!");
+      } else {
+        alert("Username is taken");
+      }
+    } else {
+      alert("All fields must be filled!");
+    }
+  }
+
   void alert(String message) {
     showDialog(
         context: context,
@@ -182,7 +202,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        register(users);
+                      },
                       child: Text("Register"),
                     ),
                   ),

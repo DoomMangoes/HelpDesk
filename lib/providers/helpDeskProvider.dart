@@ -14,4 +14,9 @@ class HelpDeskProvider extends ChangeNotifier {
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
   UnmodifiableListView<Admin> get admins => UnmodifiableListView(_admins);
+
+  void register(User user) {
+    _users.add(user);
+    notifyListeners();
+  }
 }
