@@ -7,8 +7,19 @@ class Report {
   String reportBody;
   String originalPoster;
   String category;
+  DateTime date;
 
   Report({
-    required this.reportID, required this.reportTitle, required this.reportBody, required this.originalPoster, required this.category
-  });
+    required this.reportTitle,
+    required this.reportBody,
+    required this.originalPoster,
+    required this.category,
+    required this.date,
+  }) : reportID = const Uuid().v4();
+
+  @override
+  bool operator ==(covariant Report other) => reportID == other.reportID;
+
+  @override
+  int get hashCode => reportID.hashCode;
 }
