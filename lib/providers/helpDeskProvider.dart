@@ -4,7 +4,9 @@ import '../models/user.dart';
 import 'dart:collection';
 
 class HelpDeskProvider extends ChangeNotifier {
-  final List<User> _users = [];
+  final List<User> _users = [
+    User(username: "user", password: "user"),
+  ];
   final List<Admin> _admins = [
     Admin(username: "admin", password: "admin"),
   ];

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  final String currentUser;
+  final String userType;
+
   const HomePage({
     super.key,
+    required this.currentUser,
+    required this.userType,
   });
 
   @override
@@ -15,7 +20,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         // The title text which will be shown on the action bar
-        title: Text("Homepage"),
+        title: Column(children: [
+          Text(widget.currentUser),
+          Text(
+            widget.userType,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 13,
+            ),
+          )
+        ]),
       ),
       body: Center(
         child: Text(

@@ -1,5 +1,12 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:helpdesk/screens/homePage.dart';
+import 'package:provider/provider.dart';
+
+import '../models/admin.dart';
+import '../models/user.dart';
+import '../providers/helpDeskProvider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,42 +16,116 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late final TextEditingController _usernameController;
+  late final TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  User findUser(UnmodifiableListView<User> users, String user, String pass) {
+    User match = users.firstWhere((item) => item.username == user, orElse: () {
+      return User(username: "", password: "");
+    });
+
+    return match;
+  }
+
+  Admin findAdmin(UnmodifiableListView<Admin> users, String user, String pass) {
+    Admin match = users.firstWhere((item) => item.username == user, orElse: () {
+      return Admin(username: "", password: "");
+    });
+
+    return match;
+  }
+
+  void login(UnmodifiableListView<User> users) {
+    final user = _usernameController.text;
+    final pass = _passwordController.text;
+
+    if (user != "" && pass != "") {
+      User match = findUser(users, user, pass);
+
+      if (match.username != "") {
+        if (match.username == user && match.password == pass) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomePage(
+                        currentUser: match.username,
+                        userType: "User",
+                      )));
+        } else {
+          alert("Username and password do not match");
+        }
+      } else {
+        alert("User not found");
+      }
+    } else {
+      alert("All fields must be filled!");
+    }
+  }
+
+  void adminLogin(UnmodifiableListView<Admin> admins) {
+    final user = _usernameController.text;
+    final pass = _passwordController.text;
+
+    if (user != "" && pass != "") {
+      Admin match = findAdmin(admins, user, pass);
+
+      if (match.username != "") {
+        if (match.username == user && match.password == pass) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomePage(
+                        currentUser: match.username,
+                        userType: "Admin",
+                      )));
+        } else {
+          alert("Username and password do not match");
+        }
+      } else {
+        alert("Admin not found");
+      }
+    } else {
+      alert("All fields must be filled!");
+    }
+  }
+
+  void alert(String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(message, textAlign: TextAlign.center),
+              actions: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Back"))),
+              ]);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    late final TextEditingController _usernameController;
-    late final TextEditingController _passwordController;
-
-    @override
-    void initState() {
-      _usernameController = TextEditingController();
-      _passwordController = TextEditingController();
-      super.initState();
-    }
-
-    @override
-    void dispose() {
-      _usernameController.dispose();
-      _passwordController.dispose();
-      super.dispose();
-    }
-
-    void alert(String message) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                title: Text(message, textAlign: TextAlign.center),
-                actions: <Widget>[
-                  ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          Navigator.of(context).pop();
-                        });
-                      },
-                      child: Center(child: Text("Back"))),
-                ]);
-          });
-    }
+    final provider = Provider.of<HelpDeskProvider>(context);
+    final UnmodifiableListView<User> users = provider.users;
+    final UnmodifiableListView<Admin> admins = provider.admins;
 
     return Scaffold(
       appBar: AppBar(
@@ -61,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 200,
               child: TextField(
                 maxLines: 1,
-                //controller: _titleController,
+                controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: "Username:",
                 ),
@@ -74,7 +155,8 @@ class _LoginPageState extends State<LoginPage> {
               width: 200,
               child: TextField(
                 maxLines: 1,
-                //controller: _titleController,
+                controller: _passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Password:",
                 ),
@@ -90,10 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                        login(users);
                       },
                       child: Text("Login"),
                     ),
@@ -120,12 +199,9 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                        adminLogin(admins);
                       },
-                      child: Text(" Admin Login"),
+                      child: Text("Admin Login"),
                     ),
                   ),
                 ],
