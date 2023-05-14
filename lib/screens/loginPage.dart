@@ -58,6 +58,9 @@ class _LoginPageState extends State<LoginPage> {
 
       if (match.username != "") {
         if (match.username == user && match.password == pass) {
+          context
+              .read<HelpDeskProvider>()
+              .login(match.username, match.userType);
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -85,6 +88,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (match.username != "") {
         if (match.username == user && match.password == pass) {
+          context
+              .read<HelpDeskProvider>()
+              .login(match.username, match.userType);
+
           Navigator.push(
               context,
               MaterialPageRoute(

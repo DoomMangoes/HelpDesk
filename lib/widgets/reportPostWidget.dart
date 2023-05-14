@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/report.dart';
+import '../screens/reportPage.dart';
 
 class ReportPostWidget extends StatelessWidget {
   final Report reportItem;
@@ -13,6 +14,10 @@ class ReportPostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ReportPage()));
+      },
       child: Container(
         padding: EdgeInsets.only(
           left: 15,

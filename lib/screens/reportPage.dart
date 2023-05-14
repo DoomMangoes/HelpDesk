@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:helpdesk/widgets/reportListWidget.dart';
-import 'package:helpdesk/widgets/reportPostWidget.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart';
 import '../providers/helpDeskProvider.dart';
 
-class HomePage extends StatefulWidget {
-  final String currentUser;
-  final String userType;
-
-  const HomePage({
+class ReportPage extends StatefulWidget {
+  const ReportPage({
     super.key,
-    required this.currentUser,
-    required this.userType,
   });
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ReportPage> createState() => _ReportPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     final String currentUser = context.select<HelpDeskProvider, String>(
@@ -51,9 +43,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ReportListWidget(),
-              ],
+              children: [Text("Post Page")],
             ),
           ),
         ),
