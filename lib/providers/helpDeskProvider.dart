@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/models/category.dart';
 import 'package:helpdesk/models/report.dart';
 import '../models/admin.dart';
 import '../models/user.dart';
@@ -10,6 +11,24 @@ class HelpDeskProvider extends ChangeNotifier {
   ];
   final List<Admin> _admins = [
     Admin(username: "admin", password: "admin"),
+  ];
+
+  final List<Category> _categories = [
+    Category(categoryName: "General"),
+    Category(categoryName: "AD Management"),
+    Category(categoryName: "E-mail"),
+    Category(categoryName: "Hardware"),
+    Category(categoryName: "Intranet"),
+    Category(categoryName: "Internet"),
+    Category(categoryName: "Network"),
+    Category(categoryName: "Phones"),
+    Category(categoryName: "Printers"),
+    Category(categoryName: "Programming"),
+    Category(categoryName: "Scanners"),
+    Category(categoryName: "Software"),
+    Category(categoryName: "Training"),
+    Category(categoryName: "Virus/Malware"),
+    Category(categoryName: "Other"),
   ];
 
   final List<Report> _reports = [
@@ -38,6 +57,8 @@ class HelpDeskProvider extends ChangeNotifier {
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
   UnmodifiableListView<Admin> get admins => UnmodifiableListView(_admins);
   UnmodifiableListView<Report> get reports => UnmodifiableListView(_reports);
+  UnmodifiableListView<Category> get categories =>
+      UnmodifiableListView(_categories);
 
   String get currentUser => _currentUser;
   String get currentUserType => _currentUserType;
