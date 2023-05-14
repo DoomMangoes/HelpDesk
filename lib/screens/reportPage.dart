@@ -52,7 +52,9 @@ class _ReportPageState extends State<ReportPage> {
                   reportItem: widget.reportItem,
                 ),
                 SizedBox(height: 10),
-                CommentListWidget(),
+                CommentListWidget(
+                  reportItem: widget.reportItem,
+                ),
               ],
             ),
           ),
