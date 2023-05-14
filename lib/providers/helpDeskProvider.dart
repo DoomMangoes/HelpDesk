@@ -29,8 +29,8 @@ class HelpDeskProvider extends ChangeNotifier {
         date: DateTime.now())
   ];
 
-  String _currentUser = "";
-  String _currentUserType = "";
+  String _currentUser = "Test";
+  String _currentUserType = "Test";
 
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);

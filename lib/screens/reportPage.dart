@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/helpDeskProvider.dart';
@@ -15,6 +16,9 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
+    //Remove after test
+    final provider = Provider.of<HelpDeskProvider>(context);
+
     final String currentUser = context.select<HelpDeskProvider, String>(
       (provider) => provider.currentUser,
     );
@@ -43,7 +47,9 @@ class _ReportPageState extends State<ReportPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [Text("Post Page")],
+              children: [
+                ReportPostViewWidget(),
+              ],
             ),
           ),
         ),
