@@ -5,15 +5,11 @@ import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../providers/helpDeskProvider.dart';
+import 'createReportPage.dart';
 
 class HomePage extends StatefulWidget {
-  final String currentUser;
-  final String userType;
-
   const HomePage({
     super.key,
-    required this.currentUser,
-    required this.userType,
   });
 
   @override
@@ -56,6 +52,15 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreateReportPage()));
+        },
+        child: const Icon(
+          Icons.add,
         ),
       ),
     );

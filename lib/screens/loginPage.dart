@@ -62,12 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               .read<HelpDeskProvider>()
               .login(match.username, match.userType);
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomePage(
-                        currentUser: match.username,
-                        userType: match.userType,
-                      )));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         } else {
           alert("Username and password do not match");
         }
@@ -93,12 +88,7 @@ class _LoginPageState extends State<LoginPage> {
               .login(match.username, match.userType);
 
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomePage(
-                        currentUser: match.username,
-                        userType: match.userType,
-                      )));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         } else {
           alert("Username and password do not match");
         }
