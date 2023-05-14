@@ -54,15 +54,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreateReportPage()));
-        },
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
+      floatingActionButton: currentUserType == "User"
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateReportPage()));
+              },
+              child: const Icon(
+                Icons.add,
+              ),
+            )
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateReportPage()));
+              },
+              child: const Icon(
+                Icons.filter_alt,
+              ),
+            ),
     );
   }
 }
