@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/widgets/commentItemWidget.dart';
 import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -49,6 +50,8 @@ class _ReportPageState extends State<ReportPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ReportPostViewWidget(),
+                SizedBox(height: 10),
+                CommentItemWidget(),
               ],
             ),
           ),
