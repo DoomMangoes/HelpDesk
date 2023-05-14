@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/report.dart';
+
 class ReportPostViewWidget extends StatelessWidget {
-  const ReportPostViewWidget({super.key});
+  final Report reportItem;
+  const ReportPostViewWidget({super.key, required this.reportItem});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +37,16 @@ class ReportPostViewWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "originalPoster" + " (" + "userType" + ")",
+                    reportItem.originalPoster +
+                        " (" +
+                        reportItem.userType +
+                        ")",
                     style: TextStyle(
                       fontSize: 15,
                     ),
                   ),
                   Text(
-                    DateFormat.yMMMMd().format(DateTime.now()),
+                    DateFormat.yMMMMd().format(reportItem.date),
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -57,7 +63,7 @@ class ReportPostViewWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Title",
+                      reportItem.reportTitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -69,11 +75,11 @@ class ReportPostViewWidget extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Body",
+                      reportItem.reportBody,
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -86,14 +92,14 @@ class ReportPostViewWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "category",
+                    reportItem.category,
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.grey[700],
                     ),
                   ),
                   Text(
-                    "Comments: " + "0",
+                    "Comments: " + reportItem.comments.length.toString(),
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.grey[700],

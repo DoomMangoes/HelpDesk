@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/comment.dart';
+
 class CommentItemWidget extends StatelessWidget {
-  const CommentItemWidget({super.key});
+  final Comment commentItem;
+
+  const CommentItemWidget({super.key, required this.commentItem});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +38,16 @@ class CommentItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "originalPoster" + " (" + "userType" + ")",
+                    commentItem.originalPoster +
+                        " (" +
+                        commentItem.userType +
+                        ")",
                     style: TextStyle(
                       fontSize: 15,
                     ),
                   ),
                   Text(
-                    DateFormat.yMMMMd().format(DateTime.now()),
+                    DateFormat.yMMMMd().format(commentItem.date),
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -51,7 +58,7 @@ class CommentItemWidget extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "Comment Body",
+                commentItem.commentBody,
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
