@@ -1,8 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:helpdesk/widgets/reportListWidget.dart';
 import 'package:helpdesk/widgets/reportPostWidget.dart';
 import 'package:provider/provider.dart';
 
+import '../models/category.dart';
 import '../models/user.dart';
 import '../providers/helpDeskProvider.dart';
 import 'createReportPage.dart';
@@ -25,6 +28,10 @@ class _HomePageState extends State<HomePage> {
     final String currentUserType = context.select<HelpDeskProvider, String>(
       (provider) => provider.currentUserType,
     );
+    final UnmodifiableListView<Category> categories =
+        context.select<HelpDeskProvider, UnmodifiableListView<Category>>(
+      (provider) => provider.categories,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +46,32 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         ]),
+        actions: [
+          Container(
+            width: 130,
+            padding: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 3,
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: DropdownButton<String>(
+              isExpanded: true,
+              style: TextStyle(
+                fontSize: 12,
+              ),
+              value: categories.first.categoryName,
+              items: categories.map((Category category) {
+                return DropdownMenuItem<String>(
+                  value: category.categoryName,
+                  child: Text(category.categoryName),
+                );
+              }).toList(),
+              onChanged: (_) {},
+              underline: SizedBox(),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
