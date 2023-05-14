@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../models/report.dart';
 import '../screens/reportPage.dart';
 
@@ -16,7 +15,11 @@ class ReportPostWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ReportPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => ReportPage(
+                      reportItem: reportItem,
+                    )));
       },
       child: Container(
         padding: EdgeInsets.only(
@@ -68,16 +71,15 @@ class ReportPostWidget extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                FittedBox(
-                    child: Expanded(
-                  child: Text(
-                    reportItem.reportTitle,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  reportItem.reportTitle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
-                )),
+                ),
                 SizedBox(
                   height: 10,
                 ),

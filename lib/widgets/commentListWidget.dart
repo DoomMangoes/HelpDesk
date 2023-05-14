@@ -15,7 +15,20 @@ class CommentListWidget extends StatelessWidget {
     //final provider = Provider.of<HelpDeskProvider>(context);
     //final UnmodifiableListView<Report> reportItems = provider.reports;
 
-    List<Comment> comments = [];
+    List<Comment> comments = [
+      Comment(
+          commentBody: "Kyou nani tabeta?",
+          originalPoster: "Derp",
+          userType: "user",
+          parentID: "feck",
+          date: DateTime.now()),
+      Comment(
+          commentBody: "Suki no hon wa?",
+          originalPoster: "Weeb",
+          userType: "user",
+          parentID: "feck",
+          date: DateTime.now()),
+    ];
 
     return comments.isEmpty
         ? Center(

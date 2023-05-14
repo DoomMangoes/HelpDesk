@@ -1,16 +1,15 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:helpdesk/widgets/commentListWidget.dart';
 import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';
-
 import '../models/report.dart';
 import '../providers/helpDeskProvider.dart';
 
 class ReportPage extends StatefulWidget {
+  final Report reportItem;
   const ReportPage({
     super.key,
+    required this.reportItem,
   });
 
   @override
@@ -20,10 +19,6 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
-    //Remove after test
-    final provider = Provider.of<HelpDeskProvider>(context);
-    final UnmodifiableListView<Report> reports = provider.reports;
-
     final String currentUser = context.select<HelpDeskProvider, String>(
       (provider) => provider.currentUser,
     );
@@ -54,7 +49,7 @@ class _ReportPageState extends State<ReportPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ReportPostViewWidget(
-                  reportItem: reports[0],
+                  reportItem: widget.reportItem,
                 ),
                 SizedBox(height: 10),
                 CommentListWidget(),
