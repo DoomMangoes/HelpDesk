@@ -10,7 +10,6 @@ class ReportPostViewWidget extends StatelessWidget {
       padding: EdgeInsets.only(
         left: 15,
       ),
-      height: 300,
       width: 340,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -29,6 +28,7 @@ class ReportPostViewWidget extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,19 +51,17 @@ class ReportPostViewWidget extends StatelessWidget {
                 height: 5,
               ),
               Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "reportItem.reportTitle",
-                      maxLines: 3,
+                      "Title",
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -71,7 +69,7 @@ class ReportPostViewWidget extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Text Body",
+                      "Body",
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
