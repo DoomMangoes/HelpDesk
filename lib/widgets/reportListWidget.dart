@@ -14,6 +14,15 @@ class ReportListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<HelpDeskProvider>(context);
     final UnmodifiableListView<Report> reportItems = provider.reports;
+    String currentCategory = context.select<HelpDeskProvider, String>(
+      (provider) => provider.currentCategory,
+    );
+
+    List<Report> reportList = currentCategory == "All"
+        ? reportItems.toList()
+        : reportItems
+            .where((report) => report.category == currentCategory)
+            .toList();
 
     return reportItems.isEmpty
         ? Center(
@@ -23,10 +32,10 @@ class ReportListWidget extends StatelessWidget {
             shrinkWrap: true,
             padding: EdgeInsets.all(10),
             separatorBuilder: (context, index) => Container(height: 8),
-            itemCount: reportItems.length,
+            itemCount: reportList.length,
             itemBuilder: (BuildContext context, int index) {
               return ReportPostWidget(
-                reportItem: reportItems[index],
+                reportItem: reportList[index],
               );
             });
   }

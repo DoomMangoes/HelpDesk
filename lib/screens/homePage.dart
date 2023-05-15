@@ -33,6 +33,10 @@ class _HomePageState extends State<HomePage> {
       (provider) => provider.categories,
     );
 
+    String dropDownValue = context.select<HelpDeskProvider, String>(
+      (provider) => provider.currentCategory,
+    );
+
     return Scaffold(
       appBar: AppBar(
         // The title text which will be shown on the action bar
@@ -57,17 +61,16 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
             child: DropdownButton<String>(
               isExpanded: true,
-              style: TextStyle(
-                fontSize: 12,
-              ),
-              value: categories.first.categoryName,
+              value: dropDownValue,
               items: categories.map((Category category) {
                 return DropdownMenuItem<String>(
                   value: category.categoryName,
                   child: Text(category.categoryName),
                 );
               }).toList(),
-              onChanged: (_) {},
+              onChanged: (String? value) {
+                context.read<HelpDeskProvider>().changeCategoy(value!);
+              },
               underline: SizedBox(),
             ),
           ),

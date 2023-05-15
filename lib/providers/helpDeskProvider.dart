@@ -14,6 +14,7 @@ class HelpDeskProvider extends ChangeNotifier {
   ];
 
   final List<Category> _categories = [
+    Category(categoryName: "All"),
     Category(categoryName: "General"),
     Category(categoryName: "AD Management"),
     Category(categoryName: "E-mail"),
@@ -46,12 +47,13 @@ class HelpDeskProvider extends ChangeNotifier {
         reportBody: "I dunno",
         originalPoster: "user",
         userType: "User",
-        category: "General",
+        category: "Hardware",
         date: DateTime.now())
   ];
 
   String _currentUser = "Test";
   String _currentUserType = "Test";
+  String _currentCategory = "All";
 
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
@@ -62,6 +64,7 @@ class HelpDeskProvider extends ChangeNotifier {
 
   String get currentUser => _currentUser;
   String get currentUserType => _currentUserType;
+  String get currentCategory => _currentCategory;
 
   void register(User user) {
     _users.add(user);
@@ -71,6 +74,11 @@ class HelpDeskProvider extends ChangeNotifier {
   void login(String currentUser, String currentUserType) {
     _currentUser = currentUser;
     _currentUserType = currentUserType;
+    notifyListeners();
+  }
+
+  void changeCategoy(String currentCategory) {
+    _currentCategory = currentCategory;
     notifyListeners();
   }
 }
