@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk/widgets/addCommentWidget.dart';
 import 'package:helpdesk/widgets/commentListWidget.dart';
 import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,21 @@ class _ReportPageState extends State<ReportPage> {
               ],
             ),
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return AddCommentWidget(
+                reportItem: widget.reportItem,
+              );
+            },
+          );
+        },
+        child: const Icon(
+          Icons.forum,
         ),
       ),
     );

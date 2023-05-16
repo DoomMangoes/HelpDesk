@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpdesk/models/category.dart';
 import 'package:helpdesk/models/report.dart';
 import '../models/admin.dart';
+import '../models/comment.dart';
 import '../models/user.dart';
 import 'dart:collection';
 
@@ -91,6 +92,12 @@ class HelpDeskProvider extends ChangeNotifier {
 
   void addReport(Report report) {
     _reports.add(report);
+    notifyListeners();
+  }
+
+  void addComment(Report report, Comment comment) {
+    report.comments.add(comment);
+
     notifyListeners();
   }
 }
