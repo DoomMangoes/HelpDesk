@@ -17,11 +17,20 @@ class ReportListWidget extends StatelessWidget {
     String currentCategory = context.select<HelpDeskProvider, String>(
       (provider) => provider.currentCategory,
     );
+    String userFilter = context.select<HelpDeskProvider, String>(
+      (provider) => provider.userFilter,
+    );
 
     List<Report> reportList = currentCategory == "All"
         ? reportItems.toList()
         : reportItems
             .where((report) => report.category == currentCategory)
+            .toList();
+
+    reportList = userFilter == ""
+        ? reportList
+        : reportList
+            .where((report) => report.originalPoster == userFilter)
             .toList();
 
     return reportItems.isEmpty

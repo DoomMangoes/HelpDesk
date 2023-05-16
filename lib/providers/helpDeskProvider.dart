@@ -57,6 +57,7 @@ class HelpDeskProvider extends ChangeNotifier {
   String _currentCategory = "All";
   String _reportCategory = "General";
   String _currentReportID = "";
+  String _userFilter = "";
 
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
@@ -82,6 +83,7 @@ class HelpDeskProvider extends ChangeNotifier {
   String get currentCategory => _currentCategory;
   String get reportCategory => _reportCategory;
   String get currentReportID => _currentReportID;
+  String get userFilter => _userFilter;
 
   void register(User user) {
     _users.add(user);
@@ -118,6 +120,11 @@ class HelpDeskProvider extends ChangeNotifier {
   void addComment(Report report, Comment comment) {
     report.comments.add(comment);
 
+    notifyListeners();
+  }
+
+  void changeUserFilter(String userFilter) {
+    _userFilter = userFilter;
     notifyListeners();
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:helpdesk/widgets/addCommentWidget.dart';
 import 'package:helpdesk/widgets/commentListWidget.dart';
 import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';

@@ -20,6 +20,99 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final TextEditingController _filterController;
+
+  @override
+  void initState() {
+    _filterController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+
+    super.dispose();
+  }
+
+  void filterUser() {
+    final String filter = _filterController.text;
+
+    if (filter.isNotEmpty) {
+      context.read<HelpDeskProvider>().changeUserFilter(filter);
+    } else {
+      alert();
+    }
+  }
+
+  void clearFilter() {
+    context.read<HelpDeskProvider>().changeUserFilter("");
+  }
+
+  void filterUserDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Filter posts by user:", textAlign: TextAlign.center),
+              actions: <Widget>[
+                TextField(
+                  maxLines: 1,
+                  controller: _filterController,
+                  decoration: InputDecoration(
+                    labelText: "Username:",
+                  ),
+                ),
+                SizedBox(height: 15),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        filterUser();
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Filter User Posts"))),
+                SizedBox(height: 10),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        clearFilter();
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Clear Filter"))),
+                SizedBox(height: 10),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Back"))),
+              ]);
+        });
+  }
+
+  void alert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("All fields must be filled!",
+                  textAlign: TextAlign.center),
+              actions: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Back"))),
+              ]);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final String currentUser = context.select<HelpDeskProvider, String>(
@@ -104,10 +197,7 @@ class _HomePageState extends State<HomePage> {
             )
           : FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreateReportPage()));
+                filterUserDialog();
               },
               child: const Icon(
                 Icons.filter_alt,
