@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../models/report.dart';
+import '../providers/helpDeskProvider.dart';
 
 class ReportPostViewWidget extends StatelessWidget {
-  final Report reportItem;
-  const ReportPostViewWidget({super.key, required this.reportItem});
+  const ReportPostViewWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final Report reportItem = context.select<HelpDeskProvider, Report>(
+      (provider) => provider.currentReport,
+    );
+
     return Container(
       padding: EdgeInsets.only(
         left: 15,

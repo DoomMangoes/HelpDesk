@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/report.dart';
+import '../providers/helpDeskProvider.dart';
 import '../screens/reportPage.dart';
 
 class ReportPostWidget extends StatelessWidget {
@@ -14,12 +16,10 @@ class ReportPostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        context.read<HelpDeskProvider>().setCurrentReport(reportItem.reportID);
+
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ReportPage(
-                      reportItem: reportItem,
-                    )));
+            context, MaterialPageRoute(builder: (context) => ReportPage()));
       },
       child: Container(
         padding: EdgeInsets.only(

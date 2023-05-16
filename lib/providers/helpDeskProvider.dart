@@ -56,6 +56,7 @@ class HelpDeskProvider extends ChangeNotifier {
   String _currentUserType = "Test";
   String _currentCategory = "All";
   String _reportCategory = "General";
+  String _currentReportID = "";
 
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
@@ -64,10 +65,23 @@ class HelpDeskProvider extends ChangeNotifier {
   UnmodifiableListView<Category> get categories =>
       UnmodifiableListView(_categories);
 
+  Report get currentReport =>
+      _reports.firstWhere((report) => report.reportID == _currentReportID,
+          orElse: () {
+        return Report(
+            reportTitle: "",
+            reportBody: "",
+            originalPoster: "",
+            userType: "",
+            category: "",
+            date: DateTime.now());
+      });
+
   String get currentUser => _currentUser;
   String get currentUserType => _currentUserType;
   String get currentCategory => _currentCategory;
   String get reportCategory => _reportCategory;
+  String get currentReportID => _currentReportID;
 
   void register(User user) {
     _users.add(user);
@@ -87,6 +101,12 @@ class HelpDeskProvider extends ChangeNotifier {
 
   void changeReportCategoy(String reportCategory) {
     _reportCategory = reportCategory;
+    notifyListeners();
+  }
+
+  void setCurrentReport(String currentReportID) {
+    _currentReportID = currentReportID;
+
     notifyListeners();
   }
 

@@ -5,15 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../providers/helpDeskProvider.dart';
 
-class AddCommentWidget extends StatefulWidget {
-  final Report reportItem;
-  const AddCommentWidget({super.key, required this.reportItem});
+class AddCommentPage extends StatefulWidget {
+  const AddCommentPage({super.key});
 
   @override
-  State<AddCommentWidget> createState() => _AddCommentWidgetState();
+  State<AddCommentPage> createState() => _AddCommentPageState();
 }
 
-class _AddCommentWidgetState extends State<AddCommentWidget> {
+class _AddCommentPageState extends State<AddCommentPage> {
   late final TextEditingController _commentController;
 
   @override
@@ -30,7 +29,8 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
     super.dispose();
   }
 
-  void addComment(String currentUser, String currentUserType) {
+  void addComment(
+      Report reportItem, String currentUser, String currentUserType) {
     final String comment = _commentController.text;
 
     if (comment.isNotEmpty) {
@@ -38,12 +38,10 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
           commentBody: comment,
           originalPoster: currentUser,
           userType: currentUserType,
-          parentID: widget.reportItem.reportID,
+          parentID: reportItem.reportID,
           date: DateTime.now());
 
-      context
-          .read<HelpDeskProvider>()
-          .addComment(widget.reportItem, newComment);
+      context.read<HelpDeskProvider>().addComment(reportItem, newComment);
 
       Navigator.of(context).pop();
     } else {
@@ -79,36 +77,54 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
       (provider) => provider.currentUserType,
     );
 
-    return Container(
-      height: 400,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextField(
-              maxLines: 2,
-              controller: _commentController,
-              decoration: InputDecoration(
-                labelText: "Comment:",
-              ),
+    final Report reportItem = context.select<HelpDeskProvider, Report>(
+      (provider) => provider.currentReport,
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        // The title text which will be shown on the action bar
+        title: Column(children: [
+          Text(currentUser),
+          Text(
+            currentUserType,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 13,
             ),
-            SizedBox(
-              height: 25,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                addComment(currentUser, currentUserType);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  "Add Comment",
+          )
+        ]),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextField(
+                maxLines: 2,
+                controller: _commentController,
+                decoration: InputDecoration(
+                  labelText: "Comment:",
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 25,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  addComment(reportItem, currentUser, currentUserType);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Add Comment",
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

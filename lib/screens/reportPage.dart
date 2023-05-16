@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:helpdesk/widgets/addCommentWidget.dart';
 import 'package:helpdesk/widgets/commentListWidget.dart';
@@ -5,12 +7,11 @@ import 'package:helpdesk/widgets/reportPostViewWidget.dart';
 import 'package:provider/provider.dart';
 import '../models/report.dart';
 import '../providers/helpDeskProvider.dart';
+import 'addCommentPage.dart';
 
 class ReportPage extends StatefulWidget {
-  final Report reportItem;
   const ReportPage({
     super.key,
-    required this.reportItem,
   });
 
   @override
@@ -18,6 +19,17 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  int id = 0;
+
+  void refreshData() {
+    id++;
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    refreshData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final String currentUser = context.select<HelpDeskProvider, String>(
@@ -25,6 +37,10 @@ class _ReportPageState extends State<ReportPage> {
     );
     final String currentUserType = context.select<HelpDeskProvider, String>(
       (provider) => provider.currentUserType,
+    );
+
+    final Report reportItem = context.select<HelpDeskProvider, Report>(
+      (provider) => provider.currentReport,
     );
 
     return Scaffold(
@@ -49,13 +65,9 @@ class _ReportPageState extends State<ReportPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ReportPostViewWidget(
-                  reportItem: widget.reportItem,
-                ),
+                ReportPostViewWidget(),
                 SizedBox(height: 10),
-                CommentListWidget(
-                  reportItem: widget.reportItem,
-                ),
+                CommentListWidget(),
               ],
             ),
           ),
@@ -63,14 +75,9 @@ class _ReportPageState extends State<ReportPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return AddCommentWidget(
-                reportItem: widget.reportItem,
-              );
-            },
-          );
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddCommentPage()))
+              .then(onGoBack);
         },
         child: const Icon(
           Icons.forum,

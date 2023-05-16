@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/comment.dart';
 import '../models/report.dart';
 import '../providers/helpDeskProvider.dart';
 import 'commentItemWidget.dart';
 
 class CommentListWidget extends StatelessWidget {
-  final Report reportItem;
-  const CommentListWidget({super.key, required this.reportItem});
+  const CommentListWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    //final provider = Provider.of<HelpDeskProvider>(context);
-    //final UnmodifiableListView<Report> reportItems = provider.reports;
+    final Report reportItem = context.select<HelpDeskProvider, Report>(
+      (provider) => provider.currentReport,
+    );
 
     return reportItem.comments.isEmpty
         ? Center(
