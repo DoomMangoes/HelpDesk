@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:helpdesk/models/report.dart';
 import 'package:provider/provider.dart';
 
 import '../models/category.dart';
@@ -14,6 +15,63 @@ class CreateReportPage extends StatefulWidget {
 }
 
 class _CreateReportPageState extends State<CreateReportPage> {
+  late final TextEditingController _titleController;
+  late final TextEditingController _bodyController;
+
+  @override
+  void initState() {
+    _titleController = TextEditingController();
+    _bodyController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _bodyController.dispose();
+    super.dispose();
+  }
+
+  void addReport(String currentUser, String userType, String category) {
+    final String title = _titleController.text;
+    final String body = _bodyController.text;
+
+    if (title.isNotEmpty && body.isNotEmpty) {
+      final newReport = Report(
+          reportTitle: title,
+          reportBody: body,
+          originalPoster: currentUser,
+          userType: userType,
+          category: category,
+          date: DateTime.now());
+
+      context.read<HelpDeskProvider>().addReport(newReport);
+
+      Navigator.of(context).pop();
+    } else {
+      alert();
+    }
+  }
+
+  void alert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("All fields must be filled!",
+                  textAlign: TextAlign.center),
+              actions: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Center(child: Text("Back"))),
+              ]);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final String currentUser = context.select<HelpDeskProvider, String>(
@@ -30,7 +88,9 @@ class _CreateReportPageState extends State<CreateReportPage> {
     final List<Category> selectCategories =
         categories.where((category) => category.categoryName != "All").toList();
 
-    String dropDownValue = selectCategories.first.categoryName;
+    String dropDownValue = context.select<HelpDeskProvider, String>(
+      (provider) => provider.reportCategory,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -55,6 +115,7 @@ class _CreateReportPageState extends State<CreateReportPage> {
               width: 300,
               child: TextField(
                 maxLines: 1,
+                controller: _titleController,
                 decoration: InputDecoration(
                   labelText: "Title:",
                 ),
@@ -78,6 +139,7 @@ class _CreateReportPageState extends State<CreateReportPage> {
               width: 300,
               child: TextField(
                 maxLines: 10,
+                controller: _bodyController,
               ),
             ),
             SizedBox(
@@ -107,7 +169,9 @@ class _CreateReportPageState extends State<CreateReportPage> {
                         );
                       }).toList(),
                       onChanged: (String? value) {
-                        context.read<HelpDeskProvider>().changeCategoy(value!);
+                        context
+                            .read<HelpDeskProvider>()
+                            .changeReportCategoy(value!);
                       },
                       underline: SizedBox(),
                     ),
@@ -117,7 +181,9 @@ class _CreateReportPageState extends State<CreateReportPage> {
             ),
             SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                addReport(currentUser, currentUserType, dropDownValue);
+              },
               child: Text("Post Report"),
             ),
           ],

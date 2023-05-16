@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
               onChanged: (String? value) {
-                context.read<HelpDeskProvider>().changeCategoy(value!);
+                context.read<HelpDeskProvider>().changeCurrentCategoy(value!);
               },
               underline: SizedBox(),
             ),

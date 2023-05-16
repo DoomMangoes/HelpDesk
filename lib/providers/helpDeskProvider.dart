@@ -54,6 +54,7 @@ class HelpDeskProvider extends ChangeNotifier {
   String _currentUser = "Test";
   String _currentUserType = "Test";
   String _currentCategory = "All";
+  String _reportCategory = "General";
 
   //Read only view
   UnmodifiableListView<User> get users => UnmodifiableListView(_users);
@@ -65,6 +66,7 @@ class HelpDeskProvider extends ChangeNotifier {
   String get currentUser => _currentUser;
   String get currentUserType => _currentUserType;
   String get currentCategory => _currentCategory;
+  String get reportCategory => _reportCategory;
 
   void register(User user) {
     _users.add(user);
@@ -77,8 +79,18 @@ class HelpDeskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCategoy(String currentCategory) {
+  void changeCurrentCategoy(String currentCategory) {
     _currentCategory = currentCategory;
+    notifyListeners();
+  }
+
+  void changeReportCategoy(String reportCategory) {
+    _reportCategory = reportCategory;
+    notifyListeners();
+  }
+
+  void addReport(Report report) {
+    _reports.add(report);
     notifyListeners();
   }
 }
